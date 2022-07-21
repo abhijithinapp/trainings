@@ -475,7 +475,7 @@ print(m8) #{'Feb', 'Jan', 'May', 'Apr'}
 #calculated by ^ operator or symmetric_difference() method
 m9 = m1.symmetric_difference(m2)
 print(m9)
-"""
+
 #symmetric_difference_update()
 months1 = {"Jan", "Feb", "Mar"}
 months2 = {"Mar", "Apr", "May"}
@@ -497,4 +497,229 @@ months4frozen = frozenset([{"nov", "dec"}]) #immutable set
 print(months4frozen)
 print(type(months4frozen))
 months4frozen.add("oct") # frozenset object has no attribute 'add'
+
+
+#input and output functions in python 
+studentName= input("Please enter your name:")
+print(studentName)
+studentAge = input("Please Enter your age: ")
+
+#variations of print statement to include variables
+print("The student name is", studentName, "and the age is ", )
+print("The student name is %s and the age is %s" %(studentName, studentAge))
+print("The student name is {} and the age is {}".format(studentName,studentAge))
+
+# To print in multiple lines 
+print('''Hello World
+How are you''')
+
+# To print a new line 
+print('Hello \n world')
+print('This is a backlash \\')
+print('I am 5\' 5\" tall')
+
+#Control Flow statements
+#Conditional statements 
+#If condition
+
+userInputNo = input("Enter either 1 or 2: ")
+if(userInputNo == "1"):
+    print("You entered 1")
+    print("And you are the no 1")
+elif(userInputNo == "2"):
+    print("You entered 2")
+    print("Runner up. Keep it up!")
+
+#Inline If Statement
+B = 12 
+A= 12 if B == 12 else 13
+print(A)
+
+# Python match case statement example
+#define a function
+def http_status(status):
+    match status: 
+        case 400:
+            return "Bad request"
+        case 404: 
+            return "Page not found"
+        case _:
+            return "unknown error occured"
+print(http_status(404))
+
+#try and except
+try:
+    print(5/0)
+except:
+    print('error')
+
+#functions
+def checkIfPrime(numberToCheck):
+    for x in range(2,numberToCheck):
+        if(numberToCheck%x==0):
+            return False
+    return True
+
+print(checkIfPrime(5))
+
+#function returning multiple values 
+def calculations(a,b):
+    add = a + b
+    sub = a - b
+    mul = a * b
+    div = a % b
+    return (add, sub, mul, div)
+
+#calling the functions
+output = calculations(40,30)
+print("Sum is ", output[0])
+#Generator is a function that returns an iterator 
+#iterator is something that we can loop through using a looping statement
+from email import message
+from tkinter import Y
+
+
+def calculationsyield(a,b):
+    add = a+b
+    yield add
+    sub = a-b
+    yield sub
+    mul = a*b
+    yield mul
+
+#using a for loop we can loop through the returned value from the function
+for value in calculationsyield(30,40):
+    print(value)
+
+message1 = "just a global variable"
+def myFuction ():
+    print("reached inside function ")
+    print(message1)
+    message2 = "Its a local variable" # declaring a local variable
+    print(message2)
+    message1  = "This is a modified variable"
+    print(message1) #printing the global variable
+
+
+#lambda functions in python
+sum = lambda num1, num2: num1+num2
+
+#calling the lambda function 
+print("Sum of two numbers: ", sum(2,3))
+
+#Python Modules
+#importing a module
+
+
+import random
+#calling function inside the module 
+print(random.randrange(1,10))
+
+import random as r 
+#calling function inside the module 
+print(r.randrange(1,10))
+
+#importing only specific function from the module 
+from random import randrange, randint
+print(randrange(1,10))
+
+#python date time module 
+import time
+print(time.time()) #seconds past 1st jan 1970
+print(time.localtime(time.time())) #get the multiple time values as a tuple
+print(time.asctime(time.localtime(time.time())))
+
+for i in range(0,10):
+    print(i)
+    time.sleep(1) # delay the program execution by the specified number of seconds.
+
+import datetime
+print(datetime.datetime.now()) #return the current date time object
+
+#creating custom datetime object
+birthDay = datetime.datetime(2022, 7, 20)
+print(birthDay)
+birthDay = datetime.datetime(2022,7,20,10,15,50)
+
+from datetime import datetime as dt
+if dt(dt.now().year,dt.now().month, dt.now().day,9)
+
+#python calender module
+import calendar
+myCalendar = calendar.month(2022, 7 )
+#print(myCalendar)
+myCalendar = calendar.prcal(2022)
+print(myCalendar)
+
+#python math module 
+import math
+number = 2e-7 #small value of x
+print(math.log(math.fabs(number),10))
+
+number = math.pow(4,2) #4 to the power of 2 
+print(number)
+number = math.floor(4.3) #will round to the smallest digit
+print(number)
+number = math.ceil(4,3) #will round to the next digit
+print(number)
+number = math.fabs(-10) #will return the factorial
+print(number)
+number = math.factorial(10) #will return the factorial
+print(number)
+number = math.modf(3.14) #will return the int and factorial part
+print(number)
+
+
+#calling the custom module created 
+import prime
+answer = prime.checkIfPrime(13)
+print(answer)
+
+#rights of a fuction in python 
+#is similar to the rights of a variable 
+#1 we can assign a function to a variable 
+
+def myfuc1():
+    print("This is myfunc1")
+
+#5. The inner funtion can access the enclosing function variables 
+def myOuter(myGreeting):
+    print("The outer function says ", myGreeting)
+
+    def myFirstInnerFunc():
+        print("The first inner func says ", myGreetin)
+    
+    return myFirstInnerFunc
+
+myOuterFuncVariable = myOuter("Peace to the world")
+myOuterFuncVariable()
+"""
+
+#Python decorator - a function, which accepts another function, enhance it with a wrapper function , enhance it with a wrapper function and return the enhanced function back
+# define a wapper function and return the enhaced function back 
+# 
+# define the decorator function, which accepts another function as the arguments   
+def myDecorator(myFunc):
+    def innerWrapper():
+        print("Before the Function Call")
+        myFunc()
+        print("After the Function Call")
+    return innerWrapper
+
+#defining a simple fn to pass into the decorator 
+def myFnToPassIntoDecorator():
+    print("A simple fumction to pass into decorator")
+
+myDecoratorDemo = myDecorator(myFnToPassIntoDecorator)
+
+#execute the decorator 
+myDecoratorDemo()
+
+#defining another simple function to pass into the decorator 
+@myDecorator
+def newmyFnToPassIntoDecorator():
+    print("A new simple function to pass into decorator")
+newmyFnToPassIntoDecorator()
+
+
 
