@@ -4,3 +4,4 @@ def checkIfPrime(numberToCheck):
             return False
     return True
 
+

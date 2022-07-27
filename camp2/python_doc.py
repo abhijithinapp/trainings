@@ -693,7 +693,7 @@ def myOuter(myGreeting):
 
 myOuterFuncVariable = myOuter("Peace to the world")
 myOuterFuncVariable()
-"""
+
 
 #Python decorator - a function, which accepts another function, enhance it with a wrapper function , enhance it with a wrapper function and return the enhanced function back
 # define a wapper function and return the enhaced function back 
@@ -721,5 +721,411 @@ def newmyFnToPassIntoDecorator():
     print("A new simple function to pass into decorator")
 newmyFnToPassIntoDecorator()
 
+#Main concepts of Object-Oriented Programming 
+
+#Define a simple class with a constructor that can accept two variables
+class Employee:
+    empCount = 0
+    
+    #defining a constructor
+    #that can accept two values name and salary 
+    #save those values into self (self is an instace of the class)
+    def __init__(self,name, salary):
+        self.name = name
+        self.salary = salary
+        Employee.empCount += 1 #increment the employee count when a new obj is created
+
+    #define one more simple member function
+    def displayEmpCount(self):
+        print("Total number of employees:", Employee.empCount)
+
+    #define one more simple member function
+    def displayEmployeeDetails(self):
+        print("Name: ", self.name)
+        print("Salary: ", self.salary)
+
+#create an object of employee class
+employee1 = Employee("Tom", 2000)
+employee1.displayEmpCount()
+employee1.displayEmployeeDetails()
+employee2 = Employee("Jerry", 3000)
+employee2.displayEmpCount()
+employee2.displayEmployeeDetails()
+#accessing the variable directly from the class w/o object (not recommended)
 
 
+#inheritance
+
+#Demonstrating the base class
+#Defining the Base class
+class Rocket:
+    #definign the constructor
+    def __init__(self,name, distance):
+        self.name = name
+        self.distance = distance
+
+    #defining a member function which returns a string
+    def launch(self):
+        return "{} has reached {}". format(self.name,self.distance)
+
+class MarsRover(Rocket) :
+    def __init__(self, name,distance, maker, vehicleCode):
+        Rocket.__init__(self,name,distance)
+        self.maker = maker
+        self.__vehiclecode = vehicleCode
+    def printMaker(self):
+        return "%s launched by %s" %(self.name, self.maker)
+    def getVehiclecode(self):
+        return self.__vehiclecode
+    
+class plutoRover(MarsRover):
+    def getVehicleCodefromMarsRover(self):
+        return "%s has reached %s" %(self.name, self.distance)
+        
+#Create object (instance) for main class Rocket
+x = Rocket("Small rocket", "till stratosphere")
+y = MarsRover("mars rover", "till mars","ISRO","33")
+
+print(x.launch())
+print(y.launch())
+print(y.printMaker())
+print(y.getVehiclecode())
+
+#Decorating methods of a class
+
+class Hero:
+    @classmethod
+    def say_class_hello(cls): #since its classmethiod, will receive class rewf as implicit 
+        if(cls.__name__ == "HeroSon"):
+            print("Hi Prince, called from HeroSon")
+        elif(cls.__name__ == "HeroDaughter"):
+            print("Hi Pricess, called from HeroDaughter")
+    
+    #define the decorator @staticmethod
+    @staticmethod
+    def say_hello():
+        print("Hello...") 
+    
+class HeroSon(Hero):
+    def say_son_hello(self): #first implicit arg will be self since its a regular method
+        print("Hello son from sub class HeroSon")
+
+class HeroDaughter(Hero):
+    def say_son_hello(self):
+        print("Hello daughter from sub ")
+
+testHeroSon = HeroSon()
+testHeroSon.say_class_hello()
+
+testHeroDaughter = HeroDaughter()
+testHeroDaughter.say_class_hello()
+
+class House:
+    def __init__(self, price):
+        self.__price = price
+    
+    #creating a getter method for fetching the attribute value in a class
+    @property
+    def price(self):
+        return self.__price
+
+    #creating a setter method decorator
+    @price.setter 
+    def price(self, new_price):
+        self.__price = new_price
+    
+    @price.deleter
+    def price(self):
+        del self.__price
+
+#typical access and update will be like this:
+house = House(500000) #create obj
+print(house.price) #access attributes
+house.price = 1000000 #modifying the attribute
+print(house.price) #access attribute
+del house.price #delete attribute
+print(house.price) #ace
+#File handiling Demo using Python
+#trying to open a file myfile.txt in the same dir
+#using open() method get the file object
+myFile = open("myFile.txt", "r")
+print(myFile.read())
+myFile.readline()
+
+#A simple example for higher order function 
+#which can accept at least one fn and can optionally return a fn
+
+# a simple fn with a print statement
+def greet(name):
+    return "Hello {}".format(name)
+
+#define the higher order fn which can accept fn
+def print_greetings(fn,param):
+    print(fn(param))
+
+#calling the higher order fn
+print_greetings(greet,'Abhi')
+
+#using the map function
+def mymapfunction(a):
+    return a * a
+
+x = map(mymapfunction,[1,2,3,4])
+print(list(x))
+
+#map() fn - a higher order fn which can accept a fn and also 
+#a list of iterable params. Each param will be applied to the fn
+#result will be returned back as a map obj
+#we can later convert this map obj into set/tuple
+
+#defining a simple fn
+def mymapfunction(a):
+    return a * a
+
+#calling the map fn, passing the fn as well as the iterables
+x = map(mymapfunction, (1,2,3,4))
+#x is a map obj, need to convert that into a set/tuple
+print(tuple(x))
+
+#passing a lambda fn as well as teh iterables
+x = map(lambda x: x *x, (1,2,3,4))
+#x is a map obj, need to convert that into a set/tuple
+print(tuple(x))
+
+#filter function which filters the iterables basef on condition 
+#it accepts the fn and also the iterables as parameters
+
+#defining a filter condition function
+def filterfn(x):
+    if x>=3:
+        return x
+
+#calling the filter fn passing the condition fn and iterables 
+y = filter (filterfn,(1,2,3,4))
+
+#converting the returned filter obj into tuple/list/set etc
+print(list(y))
+
+#calling the filter function using lambda funnction
+y = filter(lambda x:(x>=3), (1,2,3,4))
+
+#converting the returned filter obj into tuple/list/set etc
+print(list(y))
+
+#reduce fn to reduce the list of values based on the operation we 
+#it will accept the fn (preferably lambda) and the iterables
+
+from functools import reduce
+x = reduce(lambda a, b: a+b, [23,21,45,98])
+print(x)       
+
+
+#class and regular functions without the abstract class
+from abc import abstractmethod
+
+
+class Lion:
+    def give_food(self):
+        print("Feeding a lion with raw meat")
+
+class Panda:
+    def feed_animal(self):
+        print("Feeding a panda with bamboo")
+
+class Snake:
+    def feed_snake(self):
+        print("Feeding a snake with mice")
+
+#Animals we plan to food:
+simba = Lion()
+kunfupanda = Panda()
+kingcobra = Snake()
+simba.give_food()
+kunfupanda.feed_animal()
+kingcobra.feed_snake()
+
+from abc import ABC, abstractmethod
+from ast import Param
+class Animal(ABC):
+    @abstractmethod
+    def feed(self):
+        pass # just a placeholder function to escape empty fn error
+    @abstractmethod
+    def do(self,action):
+        pass
+class Lion(Animal):
+    def feed(self): #must implement feed because its abs method
+        print("Feeding a lion with raw meat")
+    def do(self, action):
+        print("Lion is good at {}".format(action))
+class Snake(Animal):
+    def feed(self):
+        print("Feeding a snake with mice")
+    def do(self, action):
+        print("Snake is good at {}".format(action))
+
+class Panda(Animal):
+    def feed(self):
+        print("Feeding a panda with bamboo")
+def do(self, action):
+        print("Panda is good at {}".format(action))
+
+zoo = [Lion(), Panda(), Snake()]
+#instead of calling method repeatedly like the above,
+#we can have a for loop for the list of classes
+for animal in zoo:
+    animal.feed()
+
+#To print lines in file
+myFile = open("myFile.txt", "r")
+for line in myFile:
+    print(line)
+myFile.close()
+
+myFile = open("myFile.txt", "r")
+#read all the lines and return it as a  list
+myFileContentList = myFile.readlines()
+print(myFileContentList)
+myFile.close()
+
+#opening the file cursor in append mode
+#whatever content we write will be appended to the end of file
+myFile = open("myfile.txt", "a")
+#write() method is used
+myFile.write("Humpty Dumpty sat on a wall\n")
+myFile.close()
+
+#renaming a file using python os module
+import os
+if os.path.exists("myFile.txt"):
+    os.rename("myFile.txt", "myFileNew.txt")
+    print("rename success")
+else:
+    print("file doesnot exist")
+
+#create a new directory
+
+import os
+print(os.getcwd())
+os.chdir("mydir")
+print(os.getcwd())
+
+import subprocess
+with open("myFile.t")
+
+
+#A simple demonstration of Exceptiion handling in python 
+#using the try, except, finally blocks (clause)
+
+try:
+    div = 4//0
+    print(div)
+
+except ZeroDivisionError:
+    print("You are trying to divide a number by 0")
+
+except Exe:
+    print("Sorry some error occured")
+
+finally:
+    print("It will run whatever happens")
+
+
+try:
+    div = 4//2
+except Exception as e:
+    print("You are trying to divide a number by 0")
+    print(f"{type(e).__name__} was occured. More details below:")
+    print(e)
+else: #else will work if try statement is successfull
+    print(f"division completed and result is {div}")
+
+finally:
+    print("It will run whatever happens")
+
+#Nested try except statements in python: a scenario
+try:
+    f = open("somefile.txt")
+    try: 
+        f.write("Hello world")
+    except:
+        print("Some write error occured")
+except:
+    print("the file cannot be opened")
+
+x = "Hello World"
+if not type(x) is int:
+    raise TypeError("Only numbers are allowed")
+x=0
+if x == 0:
+    raise Exception("The number cannnot be zero")
+"""
+
+#creating a user defined Exception class
+#Exceptions should be derived from the built-in exception class
+
+#creating a class inheriting the builtin Exception class
+from re import S
+
+
+class myError(Exception):
+    #creating the constructor
+    def __init__(self,value):
+        self.value = value
+    #the __str__ dunder method
+    def __str__(self):
+        return(repr(self.value))
+
+#__str__ magic fn is used to get the informal string that 
+#represent the obj
+
+#using the class that we just created
+try:
+    x = 0 
+    if x==0:
+        raise(myError("Number cannot be zero"))
+except myError as error:
+    print('A new Exception occured', error)
+
+#using the class that we just created 
+
+#the exception derived class being inherited by another class
+class myError(Exception):
+    #base class for exceptions
+    pass
+class DivideByZero(myError):
+    pass
+
+try:
+    x = 0
+    if x == 0:
+        raise DivideByZero
+except DivideByZero:
+    print('A new exception occured ')
+    print("hello")
+
+#creating a class with an empty list of software names 
+#and an empty dict of software name and version as key value pairs 
+class Softwares:
+    name = []
+    versions = {}
+
+    #defining the constructor 
+    def __init__(self,names):
+        if names:
+            self.names = names.copy() #create a copy of the list
+            for name in names: # looping through the list
+                self.versions[name] = 1
+                #initialize sw version to 1 for all sw names
+        else:
+            raise Exception("Names cannot be empty")
+            
+    #overriding the str dunder for displaying the list of sws
+    def __str__(self):
+        s = "The list of s/ws and its versions are: \n"
+        for key, value in self.versions.items():
+            s += f"{key}:{value} \n"
+        return s
+
+        #loop through the dict and print the list
+        
